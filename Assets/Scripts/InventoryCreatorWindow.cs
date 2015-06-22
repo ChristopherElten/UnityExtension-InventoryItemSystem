@@ -52,10 +52,7 @@ public class InventoryCreatorWindow : EditorWindow {
 	float resistance;
 	float health;
 	float mana;
-
-	//Asset to be created
-	InventoryItem item;
-
+	
 	//Window
 	void OnGUI(){
 
@@ -173,11 +170,22 @@ public class InventoryCreatorWindow : EditorWindow {
 
 		//Create the asset
 		if (GUILayout.Button("Create Item")) {
-			item  = CustomAssetUtil.CreateAsset<InventoryItem>(itemTitle);
-			item.init(sprite, itemTitle, itemDescription, itemTypeSelected, equipmentTypeSelected, closeCombatWeaponTypeSelected, rangedCombatWeaponTypeSelected, armorTypeSelected, accessoryTypeSelected, 
-			          attackMultiplier, defenseMultiplier, magicMultiplier, resistanceMultiplier, healthMultiplier, manaMultiplier, 
-			          hasTimeOut, effectDuration, isStackable, maxNumberOfStacks,
-			          attack, defense, magic, resistance, health, mana);
+			if (itemTypeSelected==ItemType.isConsumableItem){
+				ConsumableItem item;
+				item  = CustomAssetUtil.CreateAsset<ConsumableItem>(itemTitle);
+				item.initConsumableItem(sprite, itemTitle, itemDescription, itemTypeSelected, 
+				                        attackMultiplier, defenseMultiplier, magicMultiplier, resistanceMultiplier, healthMultiplier, manaMultiplier,
+				                        attack, defense, magic, resistance, health, mana, 
+				                        hasTimeOut, effectDuration, isStackable, maxNumberOfStacks);
+			}
+			if (itemTypeSelected==ItemType.isEquipableItem){
+				EquipableItem item;
+				item  = CustomAssetUtil.CreateAsset<EquipableItem>(itemTitle);
+				item.initEquipableItem(sprite, itemTitle, itemDescription, itemTypeSelected, 
+				                        attackMultiplier, defenseMultiplier, magicMultiplier, resistanceMultiplier, healthMultiplier, manaMultiplier,
+				                        attack, defense, magic, resistance, health, mana,
+				                        equipmentTypeSelected, closeCombatWeaponTypeSelected, armorTypeSelected, accessoryTypeSelected);
+			}
 		}
 
 
