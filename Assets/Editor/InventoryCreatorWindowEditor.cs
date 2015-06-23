@@ -13,14 +13,6 @@ public class InventoryCreatorWindowEditor : EditorWindow {
 	public static void ShowWindow(){
 		EditorWindow.GetWindow(typeof(InventoryCreatorWindowEditor));
 	}
-
-	//Editor constants
-
-	//Visuals and Identifiers
-	Sprite sprite;
-	string itemTitle = "";
-	string itemDescription = "";
-
 	//Item Type Selection Vars
 	ItemType itemTypeSelected;
 
@@ -28,10 +20,11 @@ public class InventoryCreatorWindowEditor : EditorWindow {
 	EquipmentType equipmentTypeSelected;
 	WeaponType weaponTypeSelected;
 	ArmorType armorTypeSelected;
-	float range;
 
 	//Projectile Specificity
+	bool hasProjectile;
 	Sprite projectileSprite;
+	float range;
 	float projectileWeight;
 	ParticleSystem projectileLaunchParticles;
 	TrailRenderer projectileTrail;
@@ -44,6 +37,9 @@ public class InventoryCreatorWindowEditor : EditorWindow {
 	int maxNumberOfStacks;
 
 	//Attributes shared between consumables
+	Sprite sprite;
+	string itemTitle = "";
+	string itemDescription = "";
 	double cost;
 	double weight;
 	int rarity; // Between one (1) and ten (10)
@@ -138,17 +134,18 @@ public class InventoryCreatorWindowEditor : EditorWindow {
 
 			if (equipmentTypeSelected == EquipmentType.weapon) {
 				weaponTypeSelected = (WeaponType)EditorGUILayout.EnumPopup(weaponTypeSelected);
-				range = EditorGUILayout.FloatField("Range", range);
-
-				EditorGUILayout.BeginHorizontal();
+				
+				hasProjectile = EditorGUILayout.BeginToggleGroup("Projectile", hasProjectile);
 				//Projectile
+				range = EditorGUILayout.FloatField("Range", range);
+				if (range < 0) range=0;
 				projectileWeight = EditorGUILayout.FloatField("Projectile Weight", projectileWeight);
 				projectileLaunchParticles = EditorGUILayout.ObjectField("Projectile Launch Particles: ", projectileLaunchParticles, typeof(ParticleSystem), false) as ParticleSystem;
 				//Potentially ask for particle material and then build through script?
 				projectileTrail = EditorGUILayout.ObjectField("Projectile Trail: ", projectileTrail, typeof(TrailRenderer), false) as TrailRenderer;
 				projectileImpactParticles = EditorGUILayout.ObjectField("Projectile Impact Particles: ", projectileImpactParticles, typeof(ParticleSystem), false) as ParticleSystem;
 				projectileSprite = EditorGUILayout.ObjectField("Projectile Sprite: ", projectileSprite, typeof(Sprite), false) as Sprite;
-				EditorGUILayout.EndHorizontal();
+				EditorGUILayout.EndToggleGroup();
 			}
 
 
@@ -177,7 +174,7 @@ public class InventoryCreatorWindowEditor : EditorWindow {
 			if (itemTypeSelected==ItemType.isConsumableItem){
 				ConsumableItem item;
 				item  = CustomAssetUtil.CreateAsset<ConsumableItem>(itemTitle);
-				item.initConsumableItem(sprite, itemTitle, itemDescription, itemTypeSelected, 
+				item.initConsumableItem(sprite, itemTitle, itemDescription, cost, weight, rarity, 
 				                        attackMultiplier, defenseMultiplier, magicMultiplier, resistanceMultiplier, healthMultiplier, manaMultiplier,
 				                        attack, defense, magic, resistance, health, mana, 
 				                        hasTimeOut, effectDuration, isStackable, maxNumberOfStacks);
@@ -185,10 +182,12 @@ public class InventoryCreatorWindowEditor : EditorWindow {
 			if (itemTypeSelected==ItemType.isEquipableItem){
 				EquipableItem item;
 				item  = CustomAssetUtil.CreateAsset<EquipableItem>(itemTitle);
-				item.initEquipableItem(sprite, itemTitle, itemDescription, itemTypeSelected, 
-				                        attackMultiplier, defenseMultiplier, magicMultiplier, resistanceMultiplier, healthMultiplier, manaMultiplier,
-				                        attack, defense, magic, resistance, health, mana,
-				                        equipmentTypeSelected, armorTypeSelected);
+				item.initEquipableItem(sprite, itemTitle, itemDescription, cost, weight, rarity, 
+				                       attackMultiplier, defenseMultiplier, magicMultiplier, resistanceMultiplier, healthMultiplier, manaMultiplier,
+				                       attack, defense, magic, resistance, health, mana, 
+				                       equipmentTypeSelected, weaponTypeSelected, armorTypeSelected);
+
+				//Create projectile object here
 			}
 		}
 

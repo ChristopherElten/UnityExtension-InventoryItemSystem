@@ -2,14 +2,19 @@
 using System.Collections;
 
 public abstract class InventoryItem : ScriptableObject {
-
-
-	//Visuals and Identifiers
+	
 	Sprite sprite;
-	string itemTitle;
-	string itemDescription;
-	ItemType itemType;
-
+	string itemTitle = "";
+	string itemDescription = "";
+	double cost;
+	double weight;
+	int rarity; // Between one (1) and ten (10)
+	float attack;
+	float defense;
+	float magic;
+	float resistance;
+	float health;
+	float mana;
 	float attackMultiplier;
 	float defenseMultiplier;
 	float magicMultiplier;
@@ -17,15 +22,8 @@ public abstract class InventoryItem : ScriptableObject {
 	float healthMultiplier;
 	float manaMultiplier;
 
-	float attack;
-	float defense;
-	float magic;
-	float resistance;
-	float health;
-	float mana;
 
-
-	public void init(Sprite sprite, string itemTitle, string itemDescription, ItemType itemType,
+	public void init(Sprite sprite, string itemTitle, string itemDescription, double cost, double weight, int rarity,
 	                         float attackMultiplier, float defenseMultiplier, float magicMultiplier, float resistanceMultiplier, float healthMultiplier, float manaMultiplier, 
 	                         float attack, float defense, float magic, float resistance, float health, float mana
 	                    )
@@ -33,7 +31,9 @@ public abstract class InventoryItem : ScriptableObject {
 		this.sprite = sprite;
 		this.itemTitle = itemTitle;
 		this.itemDescription = itemDescription;
-		this.itemType = itemType;
+		this.cost = cost;
+		this.weight = weight;
+		this.rarity = rarity;
 		this.attackMultiplier = attackMultiplier;
 		this.defenseMultiplier = defenseMultiplier;
 		this.magicMultiplier = magicMultiplier;
