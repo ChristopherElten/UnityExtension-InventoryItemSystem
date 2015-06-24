@@ -4,9 +4,10 @@ using System.Collections;
 public class EquipableItem : InventoryItem {
 	
 	//Equipable Item Specific Attributes
-	EquipmentType equipmentType;
-	WeaponType weaponType;
-	ArmorType armorType;
+	[SerializeField] EquipmentType equipmentType;
+	[SerializeField] WeaponType weaponType;
+	[SerializeField] ArmorType armorType;
+	[SerializeField] Projectile projectile;
 
 	public void initEquipableItem(Sprite sprite, string itemTitle, string itemDescription, double cost, double weight, int rarity,
 	                              float attackMultiplier, float defenseMultiplier, float magicMultiplier, float resistanceMultiplier, float healthMultiplier, float manaMultiplier, 
@@ -20,4 +21,10 @@ public class EquipableItem : InventoryItem {
 		this.weaponType = weaponType;
 		this.armorType = armorType;
 	}
+	
+	public void setProjectile(Projectile projectile){
+		this.projectile = projectile;
+	}
+
+
 }

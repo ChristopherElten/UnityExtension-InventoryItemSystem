@@ -2,12 +2,12 @@
 using System.Collections;
 
 public class ConsumableItem : InventoryItem {
-
+	
 	//Consumable Item Specific Attributes
-	bool hasTimeOut;
-	float effectDuration;
-	bool isStackable;
-	int maxNumberOfStacks;
+	[SerializeField] bool hasTimeOut;
+	[SerializeField] float effectDuration;
+	[SerializeField] bool isStackable;
+	[SerializeField] int maxNumberOfStacks;
 	
 	public void initConsumableItem(Sprite sprite, string itemTitle, string itemDescription, double cost, double weight, int rarity,
 	                      float attackMultiplier, float defenseMultiplier, float magicMultiplier, float resistanceMultiplier, float healthMultiplier, float manaMultiplier, 

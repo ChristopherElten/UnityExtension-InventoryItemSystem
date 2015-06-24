@@ -23,8 +23,9 @@ public class InventoryCreatorWindowEditor : EditorWindow {
 
 	//Projectile Specificity
 	bool hasProjectile;
+	string projectileName;
 	Sprite projectileSprite;
-	float range;
+	float projectileRange;
 	float projectileWeight;
 	ParticleSystem projectileLaunchParticles;
 	TrailRenderer projectileTrail;
@@ -137,8 +138,9 @@ public class InventoryCreatorWindowEditor : EditorWindow {
 				
 				hasProjectile = EditorGUILayout.BeginToggleGroup("Projectile", hasProjectile);
 				//Projectile
-				range = EditorGUILayout.FloatField("Range", range);
-				if (range < 0) range=0;
+				projectileName = EditorGUILayout.TextField("Projectile Name", projectileName);
+				projectileRange = EditorGUILayout.FloatField("Range", projectileRange);
+				if (projectileRange < 0) projectileRange=0;
 				projectileWeight = EditorGUILayout.FloatField("Projectile Weight", projectileWeight);
 				projectileLaunchParticles = EditorGUILayout.ObjectField("Projectile Launch Particles: ", projectileLaunchParticles, typeof(ParticleSystem), false) as ParticleSystem;
 				//Potentially ask for particle material and then build through script?
@@ -180,6 +182,8 @@ public class InventoryCreatorWindowEditor : EditorWindow {
 				                        hasTimeOut, effectDuration, isStackable, maxNumberOfStacks);
 			}
 			if (itemTypeSelected==ItemType.isEquipableItem){
+
+				
 				EquipableItem item;
 				item  = CustomAssetUtil.CreateAsset<EquipableItem>(itemTitle);
 				item.initEquipableItem(sprite, itemTitle, itemDescription, cost, weight, rarity, 
@@ -187,7 +191,15 @@ public class InventoryCreatorWindowEditor : EditorWindow {
 				                       attack, defense, magic, resistance, health, mana, 
 				                       equipmentTypeSelected, weaponTypeSelected, armorTypeSelected);
 
-				//Create projectile object here
+				if (hasProjectile){
+					//Create projectile object here
+					Projectile projectile;
+					projectile = CustomAssetUtil.CreateAsset<Projectile>(projectileName);
+					projectile.init(projectileName, projectileSprite, projectileRange, projectileWeight, projectileLaunchParticles, projectileTrail, projectileImpactParticles);
+
+					item.setProjectile(projectile);
+				}
+
 			}
 		}
 
