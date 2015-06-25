@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: 3391d389f305e4efba37121a1587858d
-timeCreated: 1434935763
+timeCreated: 1435114584
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - sprite: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

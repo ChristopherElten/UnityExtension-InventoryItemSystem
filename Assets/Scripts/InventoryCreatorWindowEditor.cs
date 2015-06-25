@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEditor;
 
 public enum ItemType {isEquipableItem, isConsumableItem};
-public enum EquipmentType {weapon, armor, accessory};
+public enum EquipmentType {weapon, armor};
 public enum WeaponType {magic, bow, throwing, sword, axe, lance, martial_art};
 public enum ArmorType {boots, pant, shirt, helmet, sleeves, gauntlets, accessory}
 
